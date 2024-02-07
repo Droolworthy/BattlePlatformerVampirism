@@ -1,12 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public abstract class Bar : MonoBehaviour
+public class HealthBarPlayer : Bar
 {
-    [SerializeField] protected Slider Wellness;
+    [SerializeField] private Player _gamer;
 
-    public void OnValueChanged(int value, int maxValue)
+    private void OnEnable()
     {
-        Wellness.value = (float)value / maxValue;
+        _gamer.PlayerHealthChanged += ChangeValue;
+    }
+
+    private void OnDisable()
+    {
+        _gamer.PlayerHealthChanged -= ChangeValue;
     }
 }
