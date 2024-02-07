@@ -1,12 +1,34 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
-public abstract class Bar : MonoBehaviour
+public class TakeHealthEnemy : MonoBehaviour
 {
-    [SerializeField] protected Slider Wellness;
+    [SerializeField] private int _damage;
+    [SerializeField] private int _delay;
 
-    public void OnValueChanged(int value, int maxValue)
+    private Coroutine _coroutine;
+
+    public void Play(Enemy enemy, Player player)
     {
-        Wellness.value = (float)value / maxValue;
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
+
+        _coroutine = StartCoroutine(SelectWellnessOpponent(enemy, player, _delay));
+    }
+
+    private IEnumerator SelectWellnessOpponent(Enemy enemy, Player player, int delay)
+    {
+        int startDelay = 0;
+
+        while (startDelay <= delay)
+        {
+            startDelay++;
+
+            enemy.TakeDamage(_damage);
+
+            player.TakeHealthEnemy(_damage);
+
+            yield return null;
+        }
     }
 }
