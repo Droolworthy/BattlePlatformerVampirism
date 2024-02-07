@@ -1,12 +1,24 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
-public abstract class Bar : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    [SerializeField] protected Slider Wellness;
+    [SerializeField] private int _health;
+    [SerializeField] private int _damage;
 
-    public void OnValueChanged(int value, int maxValue)
+    private int _currentHealth;
+
+    public UnityAction<int, int> PlayerHealthChanged;
+
+    private void Start()
     {
-        Wellness.value = (float)value / maxValue;
+        _currentHealth = _health;
+    }
+
+    public void TakeHealthEnemy(int health)
+    {
+        _currentHealth += health;
+
+        PlayerHealthChanged?.Invoke(_currentHealth, _health);
     }
 }
