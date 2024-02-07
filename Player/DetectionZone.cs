@@ -1,12 +1,20 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public abstract class Bar : MonoBehaviour
+public class DetectionZone : MonoBehaviour
 {
-    [SerializeField] protected Slider Wellness;
+    private bool _isEnter;
 
-    public void OnValueChanged(int value, int maxValue)
+    public bool IsEnter => _isEnter;
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Wellness.value = (float)value / maxValue;
+        if (collision.GetComponent<Enemy>())
+            _isEnter = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Enemy>())
+            _isEnter = false;
     }
 }
