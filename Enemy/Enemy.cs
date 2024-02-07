@@ -1,12 +1,27 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
-public abstract class Bar : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+public class Enemy : MonoBehaviour
 {
-    [SerializeField] protected Slider Wellness;
+    [SerializeField] private int _health;
 
-    public void OnValueChanged(int value, int maxValue)
+    private int _currentHealth;
+
+    public UnityAction<int, int> EnemyHealthChanged;
+
+    private void Start()
     {
-        Wellness.value = (float)value / maxValue;
+        _currentHealth = _health;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _currentHealth -= damage;
+        
+        EnemyHealthChanged?.Invoke(_currentHealth, _health);
+
+        if (_currentHealth <= 0)
+            Destroy(gameObject);
     }
 }
