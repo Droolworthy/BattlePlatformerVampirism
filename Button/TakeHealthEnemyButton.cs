@@ -1,12 +1,15 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public abstract class Bar : MonoBehaviour
+public class TakeHealthEnemyButton : MonoBehaviour
 {
-    [SerializeField] protected Slider Wellness;
+    [SerializeField] private DetectionZone _detectionZone;
+    [SerializeField] private TakeHealthEnemy _selectWellness;
+    [SerializeField] private Player _player;
+    [SerializeField] private Enemy _foe;
 
-    public void OnValueChanged(int value, int maxValue)
+    public void SelectWellnessOpponent()
     {
-        Wellness.value = (float)value / maxValue;
+        if (_detectionZone.IsEnter == true)
+            _selectWellness.Play(_foe, _player);
     }
 }
