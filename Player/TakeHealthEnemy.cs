@@ -30,5 +30,7 @@ public class TakeHealthEnemy : MonoBehaviour
 
             yield return null;
         }
+
+        StopCoroutine(_coroutine);
     }
 }
