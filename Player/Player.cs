@@ -4,7 +4,6 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     [SerializeField] private int _health;
-    [SerializeField] private int _damage;
 
     private int _currentHealth;
 
